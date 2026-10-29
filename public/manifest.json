@@ -1,0 +1,24 @@
+{
+    "manifest_version": 3,
+    "name": "ScrollCount",
+    "version": "1.0.0",
+    "description": "Track how many reels, shorts and short content you scroll through",
+    "permissions": [
+        "storage"
+    ],
+    "action": {
+        "default_title": "ScrollCount",
+        "default_popup": "index.html"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://www.youtube.com/shorts/*"
+            ],
+            "js": [
+                "tracker.js"
+            ],
+            "run_at": "document_idle"
+        }
+    ]
+}
