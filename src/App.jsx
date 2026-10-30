@@ -14,19 +14,21 @@ function getTodayKey() {
 function App() {
   const [count, setCount] = useState(0);
   const [loading, setloading] = useState(true);
+  const [rotating, setrotating] = useState(false);
+
+  async function loadCount() {
+    try {
+      const key = getTodayKey();
+      const data = await chrome.storage.local.get(key);
+      setCount(data[key]?.videoIds?.length ?? 0);
+    } catch (error) {
+      console.error("Could not load today's count:", error);
+    } finally {
+      setloading(false);
+    }
+  }
 
   useEffect(() => {
-    async function loadCount() {
-      try {
-        const key = getTodayKey();
-        const data = await chrome.storage.local.get(key);
-        setCount(data[key]?.videoIds?.length ?? 0);
-      } catch (error) {
-        console.error("Could not load today's count:", error);
-      } finally {
-        setloading(false);
-      }
-    }
     loadCount();
   }, []);
 
@@ -48,9 +50,26 @@ function App() {
           <p className="subtitle">Unique shorts watched today </p>
         </section>
         <footer className="footer">
-          <span className="status-dot" />
-          <span>Tracking on YT</span>
-          <RotateCcw size={15} />
+          <div>
+            <span className="status-dot" />
+            <span>Tracking on YT</span>
+          </div>
+          <button
+            className="refresh-btn"
+            title="Refresh Count"
+            aria-label="Refresh Count"
+            disabled={rotating}
+            onClick={async () => {
+              setrotating(true);
+              try {
+                await loadCount();
+              } finally {
+                setTimeout(() => setrotating(false), 500);
+              }
+            }}
+          >
+            <RotateCcw size={15} className={rotating ? "rotate-icon" : ""} />
+          </button>
         </footer>
       </main>
     </>

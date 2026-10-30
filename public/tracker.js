@@ -5,6 +5,8 @@
     const countedVideoIds = new Set();
     let lastVideoId = null;
     let ready = false;
+    let todayKey = getTodayKey();
+    let checkInProgress = false;
 
     function getTodayKey() {
         const now = new Date();
@@ -15,11 +17,12 @@
         return `scrollCount:${year}-${month}-${day}`;
     }
 
-    let todayKey = getTodayKey();
     async function loadToday() {
         try {
             const data = await chrome.storage.local.get(todayKey);
             const saved = data[todayKey];
+
+            countedVideoIds.clear();
 
             if (saved?.videoIds) {
                 saved.videoIds.forEach(id => countedVideoIds.add(id));
@@ -27,27 +30,30 @@
             ready = true;
             console.log("ScrollCount: today's saved count", countedVideoIds.size);
             checkCurrentShort();
+
         } catch (error) {
             console.error("ScrollCount: failed to load saved count", error);
         }
     }
 
     async function checkCurrentShort() {
+        if (!ready || checkInProgress) return;
+
         const currentDayKey = getTodayKey();
-        if (!ready) return;
 
         if (currentDayKey !== todayKey) {
             todayKey = currentDayKey;
-            countedVideoIds.clear();
             lastVideoId = null;
-            if (!ready) return;
             ready = false;
             await loadToday();
             return;
         }
 
         const match = location.pathname.match(/^\/shorts\/([^/]+)/);
-        if (!match) return;
+        if (!match) {
+            lastVideoId = null;
+            return;
+        }
 
         const videoId = match[1];
 
@@ -58,6 +64,7 @@
             console.log("ScrollCount : already counted", videoId);
             return;
         }
+        checkInProgress = true;
         countedVideoIds.add(videoId);
 
         try {
@@ -75,10 +82,15 @@
             });
         } catch (error) {
             countedVideoIds.delete(videoId);
+            lastVideoId = null;
             console.error("ScrollCount: failed to save short", error);
+        } finally {
+            checkInProgress = false;
         }
     }
 
+    window.addEventListener("yt-navigate-finish", checkCurrentShort);
+    window.addEventListener("popstate", checkCurrentShort);
 
     const observer = new MutationObserver(checkCurrentShort);
 
@@ -89,10 +101,6 @@
 
     loadToday();
 
-    setInterval(() => {
-        if (ready) {
-            checkCurrentShort();
-        }
-    }, 500);
+    setInterval(checkCurrentShort, 500);
 
 })();
