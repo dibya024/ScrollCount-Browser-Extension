@@ -1,26 +1,31 @@
-# ScrollCount 🎯
+# ScrollCount ⏱️
 
-**Track how many YouTube Shorts you watch each day.**
+**ScrollCount** is a Chrome extension designed to help you become more aware of your short-form video consumption. It tracks your YouTube Shorts activity and presents your scrolling statistics through a dedicated Content Wellbeing dashboard.
 
-ScrollCount is a Chrome extension designed to help you become more aware of your short-form content consumption by tracking the unique YouTube Shorts you view daily.
+Instead of scrolling mindlessly, understand your habits and take control of your screen time.
 
 ## ✨ Features
 
-- 📊 **Daily Tracking** — Counts unique YouTube Shorts watched each day.
-- 🔁 **Duplicate Prevention** — Avoids counting the same Short multiple times on the same day.
-- 💾 **Local Storage** — Saves daily viewing data using Chrome Storage API.
-- 🔄 **Daily Reset** — Starts a new count each day while preserving previous days' stored data.
-- ⚡ **Lightweight Extension** — Runs directly in Chrome with minimal setup.
+- **YouTube Shorts Tracking** — Detects Shorts activity as you navigate through YouTube.
+- **Unique Shorts Count** — Tracks distinct Shorts watched during the day.
+- **Daily Statistics** — View your daily unique Shorts count and total viewing activity.
+- **Lifetime Statistics** — Keep track of your accumulated Shorts activity.
+- **Content Wellbeing Dashboard** — View your activity in a dedicated dashboard.
+- **Reset Daily Count** — Reset today's statistics while preserving your lifetime total.
+- **Local Data Storage** — Uses Chrome's local storage API to store activity data on your device.
 
 ## 🛠️ Tech Stack
 
-- **Frontend:** React, JavaScript, CSS
-- **Build Tool:** Vite
-- **Browser Platform:** Chrome Extension Manifest V3
-- **Storage:** Chrome Storage API
-- **Icons:** Lucide React
+| Technology | Purpose |
+|---|---|
+| React | User interface |
+| Vite | Development server and production builds |
+| JavaScript | Tracking logic and application functionality |
+| HTML & CSS | Dashboard structure and styling |
+| Chrome Extension APIs | Browser integration and local storage |
+| Chrome Extension Manifest V3 | Extension architecture |
 
-## 📂 Project Structure
+## 📁 Project Structure
 
 ```text
 ScrollCount/
@@ -28,14 +33,23 @@ ScrollCount/
 │   ├── manifest.json
 │   └── tracker.js
 ├── src/
-│   ├── App.jsx
-│   ├── App.css
-│   └── main.jsx
+│   ├── components/
+│   │   ├── Sidebar.jsx
+│   │   ├── HomePage.jsx
+│   │   ├── Settings.jsx
+│   │   └── HistoryPage.jsx
+│   ├── CSS/
+│   │   ├── dashboard.css
+│   │   └── homePage.css
+│   └── Wellbeing.jsx
 ├── index.html
-├── package.json
+├── HomePage.html
 ├── vite.config.js
+├── package.json
 └── README.md
 ```
+
+*The structure above reflects the main files used in the project; your local repository may contain additional files.*
 
 ## 🚀 Getting Started
 
@@ -48,11 +62,9 @@ ScrollCount/
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/ScrollCount.git
+git clone https://github.com/dibya024/ScrollCount.git
 cd ScrollCount
 ```
-
-Replace `YOUR_USERNAME` with your GitHub username.
 
 ### 2. Install dependencies
 
@@ -60,41 +72,54 @@ Replace `YOUR_USERNAME` with your GitHub username.
 npm install
 ```
 
-### 3. Build the extension
+### 3. Start the development server
+
+```bash
+npm run dev
+```
+
+This starts Vite for development. To generate the production extension build, run:
 
 ```bash
 npm run build
 ```
-
-This generates the production-ready extension in the `dist/` directory.
 
 ### 4. Load the extension in Chrome
 
 1. Open `chrome://extensions/`.
 2. Enable **Developer mode**.
 3. Click **Load unpacked**.
-4. Select the project's `dist` folder.
-5. Open YouTube Shorts and start browsing.
+4. Select the project's `dist` folder after building.
+5. Open YouTube Shorts and test the tracking functionality.
 
-## ⚙️ How It Works
+Make sure the production build contains `manifest.json` and all referenced extension assets. Reload the extension from `chrome://extensions/` after rebuilding.
 
-1. The content script runs on YouTube Shorts pages.
-2. It detects the ID of the currently viewed Short.
-3. Unique video IDs are stored under the current date using Chrome's local storage.
-4. Rewatching a previously counted Short does not increase the daily count.
-5. The extension popup displays the daily total.
+## 📊 How It Works
+
+1. The extension detects navigation between YouTube Shorts.
+2. The tracker identifies Shorts and maintains activity counts.
+3. Daily activity data is stored using `chrome.storage.local`.
+4. The Content Wellbeing dashboard reads stored statistics and displays them.
+5. The lifetime counter preserves an accumulated total independently of the daily count.
 
 ## 🔒 Privacy
 
-ScrollCount is designed to store tracking data locally in your browser using Chrome Storage API. The current prototype does not require a backend or user account.
+ScrollCount is designed around local-first tracking.
 
-## 🗺️ Roadmap
+- Activity statistics are stored locally using Chrome storage.
+- The current tracking approach does not require a user account or a remote database.
+- Your statistics are intended to remain on your device unless future functionality introduces external synchronization.
 
-- [ ] Display daily viewing statistics in the popup.
-- [ ] Add weekly and monthly summaries.
-- [ ] Visualize viewing trends with charts.
-- [ ] Improve the popup UI and user experience.
-- [ ] Explore support for additional short-form video platforms.
+Review the extension's permissions and source code to understand exactly what data is accessed and stored.
+
+## 🗺️ Future Improvements
+
+- [ ] Support tracking additional short-form video platforms.
+- [ ] Add weekly and monthly analytics.
+- [ ] Introduce daily scrolling goals and reminders.
+- [ ] Add session-duration tracking.
+- [ ] Improve historical activity visualizations.
+- [ ] Explore optional cross-device synchronization.
 
 ## 🤝 Contributing
 
@@ -103,20 +128,14 @@ Contributions, suggestions, and bug reports are welcome.
 1. Fork the repository.
 2. Create a feature branch.
 3. Commit your changes.
-4. Open a pull request.
+4. Open a pull request describing your improvements.
 
 ## 👨‍💻 Author
 
 **Dibyaranjan Sahoo**
 
-- GitHub: [@dibya024](https://github.com/dibya024)
-
-## 📄 License
-
-No license has been specified yet. All rights are reserved by default unless a license is added to the repository.
+GitHub: [@dibya024](https://github.com/dibya024)
 
 ---
 
-**ScrollCount — Scroll mindfully.**
-
-If you find ScrollCount useful, consider giving the repository a ⭐ on GitHub!
+*ScrollCount — Scroll less mindlessly. Live more intentionally.*
