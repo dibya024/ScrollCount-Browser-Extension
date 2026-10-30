@@ -1,0 +1,143 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background: #0b1020;
+  color: #f8fafc;
+  font-family: Arial, sans-serif;
+}
+
+.popup {
+  width: 340px;
+  padding: 22px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.logo {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 38px;
+  border-radius: 12px;
+  background: #cf0a0a;
+  color: white;
+}
+
+h1 {
+  margin: 0;
+  font-size: 19px;
+}
+
+.header p {
+  margin: 4px 0 0;
+  color: #94a3b8;
+  font-size: 12px;
+}
+
+.count-card {
+  padding: 24px 16px;
+  text-align: center;
+  border: 1px solid #29334a;
+  border-radius: 18px;
+  background: linear-gradient(145deg, #18223a, #111729);
+}
+
+.label {
+  color: #a5b4fc;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.count {
+  margin: 16px 0 8px;
+  font-size: 64px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.subtitle {
+  margin: 0;
+  color: #94a3b8;
+  font-size: 12px;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 20px;
+  color: #94a3b8;
+  font-size: 12px;
+}
+
+.footer svg {
+  margin-left: auto;
+}
+
+.status-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #34d399;
+  margin-right: 2px;
+}
+
+
+.refresh-btn {
+  background: transparent;
+  border: none;
+  color: inherit;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 5px;
+  padding: 4px;
+  right: 4px;
+}
+
+.refresh-btn:hover {
+  background-color: rgb(6, 188, 6);
+  color: black;
+}
+
+.rotate-icon {
+  animation: spin 1s ease-in-out;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.content-wellbeing {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(15, 139, 161);
+  font-family: sans-serif;
+  padding: 5px;
+  font-size: 13px;
+  letter-spacing: 1px;
+  font-weight: 600;
+  border: 1px solid white;
+  border-radius: 5px;
+  margin: auto;
+  cursor: pointer;
+}

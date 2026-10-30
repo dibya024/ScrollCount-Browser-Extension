@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
-import { Play, RotateCcw } from "lucide-react";
+
 import "./App.css";
+import PopupHome from "./components/PopupHome";
+import HomePage from "./components/HomePage";
 
 function getTodayKey() {
   const now = new Date();
@@ -14,7 +16,6 @@ function getTodayKey() {
 function App() {
   const [count, setCount] = useState(0);
   const [loading, setloading] = useState(true);
-  const [rotating, setrotating] = useState(false);
 
   async function loadCount() {
     try {
@@ -34,44 +35,7 @@ function App() {
 
   return (
     <>
-      <main className="popup">
-        <header className="header">
-          <div className="logo">
-            <Play size={20} fill="currentColor" />
-          </div>
-          <div>
-            <h1>ScrollCount</h1>
-            <p>Your scrolling activity</p>
-          </div>
-        </header>
-        <section className="count-card">
-          <p className="label">Today's YT Shorts</p>
-          <div className="count">{loading ? "-" : count}</div>
-          <p className="subtitle">Unique shorts watched today </p>
-        </section>
-        <footer className="footer">
-          <div>
-            <span className="status-dot" />
-            <span>Tracking on YT</span>
-          </div>
-          <button
-            className="refresh-btn"
-            title="Refresh Count"
-            aria-label="Refresh Count"
-            disabled={rotating}
-            onClick={async () => {
-              setrotating(true);
-              try {
-                await loadCount();
-              } finally {
-                setTimeout(() => setrotating(false), 500);
-              }
-            }}
-          >
-            <RotateCcw size={15} className={rotating ? "rotate-icon" : ""} />
-          </button>
-        </footer>
-      </main>
+      <PopupHome count={count} loading={loading} />
     </>
   );
 }
