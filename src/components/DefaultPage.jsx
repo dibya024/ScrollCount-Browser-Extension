@@ -28,13 +28,13 @@ const DefaultPage = () => {
           one scroll at a time.
         </p>
 
-        <button
+        {/* <button
           className="welcome-button"
           onClick={() => navigate("/history-page")}
         >
           Explore your activity
           <ArrowRight size={17} />
-        </button>
+        </button> */}
       </section>
 
       <div className="welcome-footer">

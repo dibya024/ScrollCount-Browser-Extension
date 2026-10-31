@@ -16,10 +16,10 @@ function DashboardLayout() {
   const [choosenPage, setChoosenPage] = useState(false);
   return (
     <div className="dashboard-layout">
-      <div className="dashboard-layout">
+      <div className="default-dashboard-layout">
         <Sidebar choosenPage={choosenPage} setChoosenPage={setChoosenPage} />
         {!choosenPage && (
-          <div className="dashboard-main">
+          <div className="default-dashboard-main">
             <DefaultPage />
           </div>
         )}

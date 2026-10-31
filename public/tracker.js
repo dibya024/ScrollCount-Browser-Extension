@@ -23,6 +23,7 @@
         try {
             const data = await chrome.storage.local.get([todayKey, LIFETIME_KEY]);
             const saved = data[todayKey];
+            
             totalShortsWatched = saved?.totalViews ?? 0;
 
             countedVideoIds.clear();
@@ -89,6 +90,7 @@
                 videoId,
                 uniqueToday: countedVideoIds.size, totalToday: totalShortsWatched, lifetimetotal
             });
+
         } catch (error) {
             if (isUnique) {
                 countedVideoIds.delete(videoId);
