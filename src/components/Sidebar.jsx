@@ -9,7 +9,7 @@ const menuItems = [
   { name: "Settings", path: "/settings", icon: Settings },
 ];
 
-const Sidebar = () => {
+const Sidebar = ({choosenPage, setChoosenPage}) => {
   return (
     <aside className="sidebar">
       <div className="sidebar-brand">
@@ -31,6 +31,7 @@ const Sidebar = () => {
               key={item.path}
               to={item.path}
               end={item.path === "/"}
+              onClick={() => {setChoosenPage(true)}}
               className={({ isActive }) =>
                 `sidebar-link ${isActive ? "active" : ""}`
               }

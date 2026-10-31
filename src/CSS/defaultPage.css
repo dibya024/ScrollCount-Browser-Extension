@@ -1,0 +1,120 @@
+
+.welcome-page {
+  min-height: calc(100vh - 64px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 20px;
+  text-align: center;
+  background:
+    radial-gradient(
+      ellipse at 50% 40%,
+      rgba(56, 189, 248, 0.08),
+      transparent 55%
+    ),
+    #0b1120;
+  color: #e5e7eb;
+}
+
+.welcome-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 15px;
+  border: 1px solid #26354c;
+  border-radius: 30px;
+  background: #111c2e;
+  color: #93c5fd;
+  font-size: 13px;
+  margin-bottom: 32px;
+}
+
+.welcome-content {
+  max-width: 620px;
+}
+
+.welcome-icon {
+  width: 68px;
+  height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 26px;
+  border: 1px solid #285071;
+  border-radius: 20px;
+  background: #14243a;
+  color: #38bdf8;
+  box-shadow: 0 0 40px rgba(56, 189, 248, 0.08);
+}
+
+.welcome-content h1 {
+  margin: 0 0 18px;
+  font-size: clamp(30px, 4vw, 48px);
+  line-height: 1.2;
+  letter-spacing: -1.5px;
+  font-weight: 750;
+}
+
+.welcome-content h1 span {
+  color: #38bdf8;
+}
+
+.welcome-content p {
+  max-width: 470px;
+  margin: 0 auto 30px;
+  color: #94a3b8;
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+.welcome-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 13px 20px;
+  border: 1px solid #38bdf8;
+  border-radius: 12px;
+  background: #38bdf8;
+  color: #08111f;
+  font-size: 14px;
+  font-weight: 650;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.2s;
+}
+
+.welcome-button:hover {
+  background: #7dd3fc;
+  transform: translateY(-2px);
+}
+
+.welcome-footer {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 64px;
+  color: #64748b;
+  font-size: 12px;
+}
+
+.welcome-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #34d399;
+}
+
+@media (max-width: 600px) {
+  .welcome-page {
+    padding: 24px 16px;
+  }
+
+  .welcome-content p {
+    font-size: 14px;
+  }
+
+  .welcome-footer {
+    margin-top: 44px;
+  }
+}

@@ -3,12 +3,17 @@
   min-height: 100vh;
   background: #0b1120;
   color: #e5e7eb;
+  display:flex;
+  flex-direction: row;
 }
 
 .dashboard-main {
-  margin-left: 250px;
+  flex:1;
+  min-width: 0;
+  margin-left: 300px;
   padding: 32px;
   min-height: 100vh;
+  box-sizing: border-box;
 }
 
 @media (max-width: 760px) {
