@@ -1,31 +1,27 @@
-# ScrollCount ⏱️
+# ScrollCount
 
-**ScrollCount** is a Chrome extension designed to help you become more aware of your short-form video consumption. It tracks your YouTube Shorts activity and presents your scrolling statistics through a dedicated Content Wellbeing dashboard.
+ScrollCount is a Chrome extension that helps you understand your YouTube Shorts
+activity. It counts Shorts as you navigate through YouTube and displays your
+statistics in a popup and a separate Content Wellbeing dashboard.
 
-Instead of scrolling mindlessly, understand your habits and take control of your screen time.
+## Features
 
-## ✨ Features
+- Tracks YouTube Shorts navigation on `www.youtube.com`.
+- Shows today's unique Shorts count in the extension popup.
+- Shows today's unique Shorts, total views, and lifetime total in the dashboard.
+- Provides activity history for today, the last 3 days, or the last 7 days.
+- Lets you reset today's counts without resetting the lifetime total.
+- Stores activity data locally with Chrome Storage.
 
-- **YouTube Shorts Tracking** — Detects Shorts activity as you navigate through YouTube.
-- **Unique Shorts Count** — Tracks distinct Shorts watched during the day.
-- **Daily Statistics** — View your daily unique Shorts count and total viewing activity.
-- **Lifetime Statistics** — Keep track of your accumulated Shorts activity.
-- **Content Wellbeing Dashboard** — View your activity in a dedicated dashboard.
-- **Reset Daily Count** — Reset today's statistics while preserving your lifetime total.
-- **Local Data Storage** — Uses Chrome's local storage API to store activity data on your device.
+## Built with
 
-## 🛠️ Tech Stack
+- React and React Router
+- Vite
+- Tailwind CSS 4 and regular CSS
+- Lucide React icons
+- Chrome Extension Manifest V3 APIs
 
-| Technology | Purpose |
-|---|---|
-| React | User interface |
-| Vite | Development server and production builds |
-| JavaScript | Tracking logic and application functionality |
-| HTML & CSS | Dashboard structure and styling |
-| Chrome Extension APIs | Browser integration and local storage |
-| Chrome Extension Manifest V3 | Extension architecture |
-
-## 📁 Project Structure
+## Project structure
 
 ```text
 ScrollCount/
@@ -34,108 +30,103 @@ ScrollCount/
 │   └── tracker.js
 ├── src/
 │   ├── components/
-│   │   ├── Sidebar.jsx
+│   │   ├── DefaultPage.jsx
+│   │   ├── HistoryPage.jsx
 │   │   ├── HomePage.jsx
+│   │   ├── PopupHome.jsx
 │   │   ├── Settings.jsx
-│   │   └── HistoryPage.jsx
+│   │   └── Sidebar.jsx
 │   ├── CSS/
 │   │   ├── dashboard.css
-│   │   └── homePage.css
+│   │   ├── defaultPage.css
+│   │   ├── historyPage.css
+│   │   ├── homePage.css
+│   │   ├── popupHome.css
+│   │   ├── settings.css
+│   │   └── sidebar.css
+│   ├── App.jsx
+│   ├── App.css
+│   ├── index.css
+│   ├── main.jsx
 │   └── Wellbeing.jsx
-├── index.html
 ├── HomePage.html
-├── vite.config.js
+├── index.html
 ├── package.json
-└── README.md
+└── vite.config.js
 ```
 
-*The structure above reflects the main files used in the project; your local repository may contain additional files.*
+`index.html` is the extension popup. `HomePage.html` is the dashboard entry
+point, with overview, history, and settings routes.
 
-## 🚀 Getting Started
+## Develop and build
 
 ### Prerequisites
 
 - Google Chrome
 - Node.js and npm
-- Git
 
-### 1. Clone the repository
-
-```bash
-git clone https://github.com/dibya024/ScrollCount.git
-cd ScrollCount
-```
-
-### 2. Install dependencies
+Install dependencies and start the Vite development server:
 
 ```bash
 npm install
-```
-
-### 3. Start the development server
-
-```bash
 npm run dev
 ```
 
-This starts Vite for development. To generate the production extension build, run:
+The development server is useful for working on the UI. To test the extension
+with Chrome APIs, build it and load the generated extension instead:
 
 ```bash
 npm run build
 ```
 
-### 4. Load the extension in Chrome
+The available project scripts are:
 
-1. Open `chrome://extensions/`.
-2. Enable **Developer mode**.
-3. Click **Load unpacked**.
-4. Select the project's `dist` folder after building.
-5. Open YouTube Shorts and test the tracking functionality.
+| Command | Description |
+|---|---|
+| `npm run dev` | Start the Vite development server |
+| `npm run build` | Create the production build in `dist/` |
+| `npm run preview` | Preview the production build |
+| `npm run lint` | Run ESLint |
 
-Make sure the production build contains `manifest.json` and all referenced extension assets. Reload the extension from `chrome://extensions/` after rebuilding.
+## Load the extension in Chrome
 
-## 📊 How It Works
+1. Run `npm run build`.
+2. Open `chrome://extensions/` in Chrome.
+3. Enable **Developer mode**.
+4. Click **Load unpacked** and select the generated `dist/` folder.
+5. Visit YouTube and navigate through Shorts to generate activity.
+6. Open the ScrollCount extension popup and select **Open Content Wellbeing**
+   to view the dashboard.
 
-1. The extension detects navigation between YouTube Shorts.
-2. The tracker identifies Shorts and maintains activity counts.
-3. Daily activity data is stored using `chrome.storage.local`.
-4. The Content Wellbeing dashboard reads stored statistics and displays them.
-5. The lifetime counter preserves an accumulated total independently of the daily count.
+After rebuilding, return to `chrome://extensions/` and reload ScrollCount.
 
-## 🔒 Privacy
+## How tracking works
 
-ScrollCount is designed around local-first tracking.
+The Manifest V3 content script runs on YouTube pages. It observes YouTube
+navigation and records Shorts IDs and visit totals in `chrome.storage.local`.
+Daily records are kept under date-specific keys; the lifetime total is stored
+separately. The popup and dashboard read those local records to display counts.
 
-- Activity statistics are stored locally using Chrome storage.
-- The current tracking approach does not require a user account or a remote database.
-- Your statistics are intended to remain on your device unless future functionality introduces external synchronization.
+## Privacy
 
-Review the extension's permissions and source code to understand exactly what data is accessed and stored.
+ScrollCount stores its activity records and tracking preference in Chrome's
+local storage. The current extension does not require an account or a remote
+database. Its content script is configured to run on YouTube pages only.
 
-## 🗺️ Future Improvements
+## Contributing
 
-- [ ] Support tracking additional short-form video platforms.
-- [ ] Add weekly and monthly analytics.
-- [ ] Introduce daily scrolling goals and reminders.
-- [ ] Add session-duration tracking.
-- [ ] Improve historical activity visualizations.
-- [ ] Explore optional cross-device synchronization.
+Bug reports, suggestions, and pull requests are welcome. For a change:
 
-## 🤝 Contributing
+1. Fork the repository and create a feature branch.
+2. Install dependencies with `npm install`.
+3. Make and test your changes.
+4. Open a pull request describing the change.
 
-Contributions, suggestions, and bug reports are welcome.
+## Author
 
-1. Fork the repository.
-2. Create a feature branch.
-3. Commit your changes.
-4. Open a pull request describing your improvements.
-
-## 👨‍💻 Author
-
-**Dibyaranjan Sahoo**
-
+**Dibyaranjan Sahoo**  
 GitHub: [@dibya024](https://github.com/dibya024)
 
 ---
 
-*ScrollCount — Scroll less mindlessly. Live more intentionally.*
+*ScrollCount — scroll less mindlessly. Live more intentionally.*
