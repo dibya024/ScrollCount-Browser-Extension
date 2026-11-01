@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   History,
   CalendarDays,
@@ -33,6 +33,8 @@ const HistoryPage = () => {
   const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+
+  const filterRef = useRef(null);
 
   useEffect(() => {
     let active = true;
@@ -133,31 +135,41 @@ const HistoryPage = () => {
       <header className="history-header">
         <div className="history-heading">
           <div className="history-eyebrow">
-            <History size={14} />
+            <History size={23} />
             <span>YOUR DIGITAL WELLBEING</span>
           </div>
 
-          <h1>
-            Your activity, <span>in perspective.</span>
+          <h1 className=" bg-linear-to-r from-violet-300 via-cyan-300-400 to-green-500 bg-clip-text text-transparent ">
+            Your activity, in perspective.
           </h1>
-          <p>
-            Understand your habits, celebrate your progress, and scroll with
+          <p className="text-xl">
+            Understand habits, celebrate progress, improve focus and scroll with
             intention.
           </p>
         </div>
 
         <label className="history-filter">
-          <CalendarDays size={17} />
+          <CalendarDays size={20} />
+
           <select
+            ref={filterRef}
             value={filter}
             onChange={(e) => setFilter(e.target.value)}
             aria-label="Filter history"
           >
-            <option>Today</option>
-            <option>3 days</option>
-            <option>7 days</option>
+            <option value="Today">Today</option>
+            <option value="3 days">Last 3 days</option>
+            <option value="7 days">Last 7 days</option>
           </select>
-          <ChevronDown size={15} />
+
+          <ChevronDown
+            size={20}
+            className="history-filter-chevron"
+            onClick={() => {
+              filterRef.current?.focus();
+              filterRef.current?.click();
+            }}
+          />
         </label>
       </header>
 
@@ -205,11 +217,11 @@ const HistoryPage = () => {
         <div className="history-section-heading">
           <div>
             <div className="history-eyebrow">
-              <TrendingUp size={14} />
+              <TrendingUp size={16} />
               ACTIVITY OVERVIEW
             </div>
             <h2>Your scrolling rhythm</h2>
-            <p>See how your viewing activity changes day to day.</p>
+            <p>See how your viewing activity changes day to day</p>
           </div>
           <span className="history-chart-badge">
             <span className="history-live-dot" />
@@ -219,13 +231,38 @@ const HistoryPage = () => {
         </div>
 
         <div className="history-chart">
-          {filteredHistory.map((day) => (
-            <div className="history-row" key={day.dateKey}>
-              <div>{day.date}</div>
-              <div>{day.unique}</div>
-              <div>{day.total}</div>
-            </div>
-          ))}
+          {filteredHistory
+            .slice()
+            .reverse()
+            .map((day) => {
+              const barHeight = (day.total / maxVisits) * 100;
+
+              return (
+                <div className="history-chart-column" key={day.dateKey}>
+                  <div className="history-chart-value">{day.total}</div>
+
+                  <div className="history-chart-bar-wrapper">
+                    <div
+                      className={`history-chart-bar ${
+                        day.date === "Today" ? "today-bar" : ""
+                      }`}
+                      style={{
+                        height: `${day.total > 0 ? Math.max(barHeight, 4) : 0}%`,
+                      }}
+                      title={`${day.fullDate}: ${day.total} visits`}
+                    />
+                  </div>
+
+                  <span className="history-chart-label">
+                    {day.date === "Yesterday"
+                      ? "Yest."
+                      : day.date === "Today"
+                        ? "Today"
+                        : day.fullDate.split(" ").slice(0, 2).join(" ")}
+                  </span>
+                </div>
+              );
+            })}
         </div>
 
         <div className="history-chart-legend">

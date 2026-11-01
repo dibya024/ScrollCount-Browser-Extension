@@ -10,6 +10,7 @@ import Homepage from "./components/HomePage";
 import Settings from "./components//Settings";
 import HistoryPage from "./components/HistoryPage";
 
+import "./index.css";
 import "./CSS/dashboard.css";
 
 function DashboardLayout() {

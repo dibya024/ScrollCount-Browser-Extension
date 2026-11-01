@@ -1,64 +1,92 @@
 import { useState } from "react";
-import { Play, RotateCcw } from "lucide-react";
+import { Play, RotateCcw, ArrowUpRight, Activity } from "lucide-react";
 
 import "../CSS/popupHome.css";
 
-const PopupHome = ({ count, loading }) => {
-  const [rotating, setrotating] = useState(false);
+const PopupHome = ({ count, loading, loadCount }) => {
+  const [rotating, setRotating] = useState(false);
 
   const handleRefresh = async () => {
-    setrotating(true);
+    if (rotating || typeof loadCount !== "function") return;
+
+    setRotating(true);
     try {
       await loadCount();
     } finally {
-      setTimeout(() => setrotating(false), 500);
+      setTimeout(() => setRotating(false), 500);
     }
   };
 
   return (
-    <div>
-      <main className="popup">
-        <header className="header">
-          <div className="logo">
-            <Play size={20} fill="currentColor" />
+    <main className="popup">
+      <header className="header">
+        <div className="popup-brand-icon">
+          <Play size={19} fill="currentColor" strokeWidth={1.8} />
+        </div>
+
+        <div className="popup-brand-text">
+          <h1>ScrollCount</h1>
+          <p>Your scrolling activity</p>
+        </div>
+      </header>
+
+      <section className="count-card">
+        <div className="count-card-top">
+          <div className="count-icon">
+            <Activity size={17} strokeWidth={2} />
           </div>
-          <div>
-            <h1>ScrollCount</h1>
-            <p>Your scrolling activity</p>
+          <span className="count-period">TODAY</span>
+        </div>
+
+        <p className="label">YouTube Shorts</p>
+
+        <div className="count-row">
+          <span className="count">{loading ? "—" : count ?? 0}</span>
+          <span className="count-unit">shorts</span>
+        </div>
+
+        <p className="subtitle">
+          Unique Shorts watched today
+        </p>
+
+        <div className="count-divider" />
+
+        <button
+          className="content-wellbeing"
+          onClick={() => {
+            chrome.tabs.create({
+              url: chrome.runtime.getURL("HomePage.html"),
+            });
+          }}
+        >
+          <span>Open Content Wellbeing</span>
+          <ArrowUpRight size={17} />
+        </button>
+      </section>
+
+      <footer className="footer">
+        <div className="tracking-status">
+          <span className="status-dot" />
+          <div className="tracking-copy">
+            <span className="tracking-title">Tracking active</span>
+            <span className="tracking-subtitle">YouTube Shorts</span>
           </div>
-        </header>
-        <section className="count-card">
-          <p className="label">Today's YT Shorts</p>
-          <div className="count">{loading ? "-" : count}</div>
-          <p className="subtitle">Unique shorts watched today </p>
-          <button
-            className="content-wellbeing"
-            onClick={() => {
-              chrome.tabs.create({
-                url: chrome.runtime.getURL("HomePage.html"),
-              });
-            }}
-          >
-            Content Wellbeing
-          </button>
-        </section>
-        <footer className="footer">
-          <div>
-            <span className="status-dot" />
-            <span>Tracking on YT</span>
-          </div>
-          <button
-            className="refresh-btn"
-            title="Refresh Count"
-            aria-label="Refresh Count"
-            disabled={rotating}
-            onClick={handleRefresh}
-          >
-            <RotateCcw size={15} className={rotating ? "rotate-icon" : ""} />
-          </button>
-        </footer>
-      </main>
-    </div>
+        </div>
+
+        <button
+          className="refresh-btn"
+          title="Refresh count"
+          aria-label="Refresh count"
+          disabled={rotating || loading || typeof loadCount !== "function"}
+          onClick={handleRefresh}
+        >
+          <RotateCcw
+            size={17}
+            className={rotating ? "rotate-icon" : ""}
+          />
+        </button>
+      </footer>
+    </main>
   );
 };
 

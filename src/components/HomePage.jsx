@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { RotateCcw, Activity, Eye, Layers, TrendingUp } from "lucide-react";
 
@@ -26,7 +25,7 @@ const HomePage = () => {
         const today = data[key];
 
         const totalData = await chrome.storage.local.get(
-          "scrollCount:lifetimeTotal"
+          "scrollCount:lifetimeTotal",
         );
 
         setLifetimeTotal(totalData["scrollCount:lifetimeTotal"] ?? 0);
@@ -54,7 +53,7 @@ const HomePage = () => {
 
   async function handleReset() {
     const confirmed = window.confirm(
-      "Reset today's count? Your lifetime count will be preserved."
+      "Reset today's count? Your lifetime count will be preserved.",
     );
 
     if (!confirmed) return;
@@ -82,15 +81,16 @@ const HomePage = () => {
       <header className="overview-header">
         <div className="overview-heading">
           <span className="eyebrow">
-            <Activity size={15} />
+            <Activity size={20} />
             YOUR DIGITAL WELLBEING
           </span>
 
-          <h1>Content Wellbeing</h1>
+          <h1 className="bg-linear-to-r from-cyan-200 via-cyan-400 to-green-500 bg-clip-text text-transparent ">
+            Digital Detox
+          </h1>
 
           <p>
-            Understand your scrolling habits and build healthier
-            screen-time routines, one day at a time.
+            Understand your scrolling habits and build healthier screen-time.
           </p>
         </div>
 
@@ -106,7 +106,7 @@ const HomePage = () => {
           <p>Here is a summary of your YouTube Shorts activity.</p>
         </div>
         <span className="intro-icon">
-          <TrendingUp size={23} />
+          <TrendingUp size={30} />
         </span>
       </section>
 
@@ -114,50 +114,44 @@ const HomePage = () => {
         <article className="stats-card unique-card">
           <div className="stats-card-top">
             <span className="stats-icon">
-              <Eye size={21} />
+              <Eye size={20} />
             </span>
             <span className="stats-period">TODAY</span>
           </div>
 
-          <p className="stats-label">Unique Shorts</p>
+          <p className="stats-label bg-linear-to-r from-cyan-200 via-green-300 to-red-400 bg-clip-text text-transparent ">Unique Shorts</p>
           <p className="stats-number">{uniqueShorts}</p>
-          <p className="stats-description">
-            Different Shorts watched today
-          </p>
+          <p className="stats-description">Different Shorts watched today</p>
         </article>
 
         <article className="stats-card total-card">
           <div className="stats-card-top">
             <span className="stats-icon">
-              <Activity size={21} />
+              <Activity size={20} />
             </span>
             <span className="stats-period">TODAY</span>
           </div>
 
-          <p className="stats-label">Total Shorts</p>
+          <p className="stats-label bg-linear-to-r from-cyan-200 via-green-300 to-red-400 bg-clip-text text-transparent ">Total Shorts</p>
           <p className="stats-number">{totalShortsWatched}</p>
-          <p className="stats-description">
-            Including repeated visits
-          </p>
+          <p className="stats-description">Including repeated visits</p>
         </article>
 
         <article className="stats-card lifetime-card">
           <div className="stats-card-top">
             <span className="stats-icon">
-              <Layers size={21} />
+              <Layers size={20} />
             </span>
             <span className="stats-period">ALL TIME</span>
           </div>
 
-          <p className="stats-label">Lifetime Total</p>
+          <p className="stats-label bg-linear-to-r from-cyan-200 via-red-400 to-red-600 bg-clip-text text-transparent ">Lifetime Total</p>
           <p className="stats-number">{lifetimeTotal}</p>
-          <p className="stats-description">
-            Total recorded Shorts visits
-          </p>
+          <p className="stats-description">Total Shorts watched till today.</p>
         </article>
       </section>
 
-      <section className="wellbeing-panel">
+      {/* <section className="wellbeing-panel">
         <div className="wellbeing-panel-icon">
           <Activity size={22} />
         </div>
@@ -165,14 +159,16 @@ const HomePage = () => {
         <div className="wellbeing-panel-content">
           <h2>Small steps, healthier habits</h2>
           <p>
-            Keep an eye on your activity and make intentional
-            decisions about how you spend your time online.
+            Keep an eye on your activity and make intentional decisions about
+            how you spend your time online.
           </p>
         </div>
-      </section>
+      </section> */}
 
       <footer className="overview-footer">
-        <span>ScrollCount <span className="footer-separator">/</span> Overview</span>
+        <span>
+          ScrollCount <span className="footer-separator">/</span> Overview
+        </span>
 
         <button className="reset-btn" onClick={handleReset}>
           <RotateCcw size={15} />
